@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useEcomStore from "../store/ecom-store";
 import useTranslation from "../hooks/useTranslation";
-import { Search, ShoppingCart, History, User, LogOut, ChevronDown, LayoutDashboard, MessageSquare, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, History, User, LogOut, ChevronDown, LayoutDashboard, MessageSquare } from "lucide-react";
 import SearchModal from "./SearchModal";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { toast } from "react-toastify";
@@ -15,9 +15,7 @@ const MainNav = () => {
   const hasNewOrder = useEcomStore((state) => state.hasNewOrder);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const mobileMenuRef = useRef(null);
   const navigate = useNavigate();
 
   // Close dropdown when clicking outside
@@ -26,36 +24,28 @@ const MainNav = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsUserDropdownOpen(false);
       }
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
-        setIsMobileMenuOpen(false);
-      }
     };
 
-    if (isUserDropdownOpen || isMobileMenuOpen) {
+    if (isUserDropdownOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isUserDropdownOpen, isMobileMenuOpen]);
+  }, [isUserDropdownOpen]);
 
   const handleLogout = () => {
     actionLogout();
     toast.success("Logged out successfully");
     navigate("/");
     setIsUserDropdownOpen(false);
-    setIsMobileMenuOpen(false);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
   };
 
   return (
     <>
       <nav className="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
-        <div className="mx-auto px-4">
+        <div className=" mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             {/* Left Side - Logo and Navigation */}
             <div className="flex items-center gap-6">
@@ -93,17 +83,9 @@ const MainNav = () => {
                 )}
               </Link>
 
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors"
-              >
-                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
-
-              {/* Desktop: Login/Register on right when not logged in */}
+              {/* Login/Register on right when not logged in */}
               {!user && (
-                <div className="hidden md:flex items-center gap-2">
+                <div className="flex items-center gap-2">
                   <Link 
                     to={"/login"} 
                     className="px-4 py-2 hover:bg-gray-800 rounded-lg transition-colors"
@@ -119,9 +101,9 @@ const MainNav = () => {
                 </div>
               )}
 
-              {/* Desktop: Show History + User Dropdown when logged in */}
+              {/* Show History + User Dropdown when logged in */}
               {user && (
-                <div className="hidden md:flex items-center gap-4">
+                <div className="flex items-center gap-4">
                   {/* History Button */}
                   <Link
                     to="/user/history"
@@ -194,101 +176,6 @@ const MainNav = () => {
               )}
             </div>
           </div>
-
-          {/* Mobile Menu */}
-          {isMobileMenuOpen && (
-            <div ref={mobileMenuRef} className="md:hidden bg-gray-800 border-t border-gray-700 py-4 px-4 space-y-3">
-              {/* Mobile Navigation Links */}
-              <Link 
-                to="/" 
-                onClick={closeMobileMenu}
-                className="block py-2 hover:text-green-400 transition-colors"
-              >
-                {t.home}
-              </Link>
-              <Link 
-                to="/shop" 
-                onClick={closeMobileMenu}
-                className="block py-2 hover:text-green-400 transition-colors"
-              >
-                {t.shop}
-              </Link>
-
-              <hr className="border-gray-700 my-2" />
-
-              {/* Mobile User Actions */}
-              {!user ? (
-                <>
-                  <Link 
-                    to="/login"
-                    onClick={closeMobileMenu}
-                    className="block py-2 hover:text-green-400 transition-colors"
-                  >
-                    {t.login}
-                  </Link>
-                  <Link 
-                    to="/register"
-                    onClick={closeMobileMenu}
-                    className="block py-2 text-green-400 font-semibold hover:text-green-300 transition-colors"
-                  >
-                    {t.register}
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/user/history"
-                    onClick={closeMobileMenu}
-                    className="flex items-center gap-2 py-2 hover:text-green-400 transition-colors"
-                  >
-                    <History size={18} />
-                    <span>{t.history}</span>
-                    {hasNewOrder && (
-                      <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-3 h-3 animate-pulse"></span>
-                    )}
-                  </Link>
-                  <Link
-                    to="/user"
-                    onClick={closeMobileMenu}
-                    className="flex items-center gap-2 py-2 hover:text-green-400 transition-colors"
-                  >
-                    <User size={18} />
-                    <span className="truncate">{user.email || user.name || "User"}</span>
-                  </Link>
-                  {(user.role === "admin" || user.role === "superadmin") && (
-                    <Link
-                      to="/admin"
-                      onClick={closeMobileMenu}
-                      className="flex items-center gap-2 py-2 text-green-400 hover:text-green-300 transition-colors"
-                    >
-                      <LayoutDashboard size={18} />
-                      <span>Admin Panel</span>
-                    </Link>
-                  )}
-                  {user.role !== 'admin' && user.role !== 'superadmin' && (
-                    <Link
-                      to="/user/support"
-                      onClick={closeMobileMenu}
-                      className="flex items-center gap-2 py-2 hover:text-green-400 transition-colors"
-                    >
-                      <MessageSquare size={18} />
-                      <span>{t.support}</span>
-                    </Link>
-                  )}
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      closeMobileMenu();
-                    }}
-                    className="w-full text-left flex items-center gap-2 py-2 text-red-400 hover:text-red-300 transition-colors"
-                  >
-                    <LogOut size={18} />
-                    <span>{t.logout}</span>
-                  </button>
-                </>
-              )}
-            </div>
-          )}
         </div>
       </nav>
       
