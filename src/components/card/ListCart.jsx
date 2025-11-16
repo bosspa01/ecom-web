@@ -39,46 +39,46 @@ const ListCart = () => {
       </div>
 
       {cart.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-          <div className="col-span-1 md:col-span-2 space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="col-span-2 space-y-3">
             {cart.map((item, index) => (
-              <div key={index} className="bg-gray-700 p-3 sm:p-4 rounded-lg shadow-md border border-gray-600">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                  <div className="flex gap-3 items-start flex-1 min-w-0">
+              <div key={index} className="bg-gray-700 p-4 rounded-lg shadow-md border border-gray-600">
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-3 items-center flex-1">
                     {item.images && item.images.length > 0 ? (
                       <img
                         src={item.images[0].url}
-                        className="w-16 sm:w-20 h-16 sm:h-20 object-cover rounded-md flex-shrink-0"
+                        className="w-20 h-20 object-cover rounded-md"
                         alt={item.title}
                       />
                     ) : (
-                      <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gray-600 rounded-md flex text-center items-center text-gray-400 text-xs flex-shrink-0">
+                      <div className="w-20 h-20 bg-gray-600 rounded-md flex text-center items-center text-gray-400 text-xs">
                         {t.no_image}
                       </div>
                     )}
 
-                    <div className="flex-1 min-w-0">
-                      <p className="font-bold text-white text-sm sm:text-base line-clamp-2">{item.title}</p>
-                      <p className="text-xs sm:text-sm text-gray-400 mt-1">
+                    <div className="flex-1">
+                      <p className="font-bold text-white">{item.title}</p>
+                      <p className="text-sm text-gray-400">
                         {numberFormat(item.price)}&nbsp;฿ x {numberFormat(item.count)}
                       </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-bold text-green-400 text-base sm:text-lg">{numberFormat(item.price * item.count)}&nbsp;฿</div>
+                  <div>
+                    <div className="font-bold text-green-400 text-lg">{numberFormat(item.price * item.count)}&nbsp;฿</div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="bg-gray-700 p-4 sm:p-6 rounded-lg shadow-md border border-gray-600 space-y-4">
-            <p className="text-xl sm:text-2xl font-bold text-white">{t.order_summary}</p>
+          <div className="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 space-y-4">
+            <p className="text-2xl font-bold text-white">{t.order_summary}</p>
             <div className="flex justify-between items-center pt-4 border-t border-gray-600">
-              <span className="text-gray-300 font-semibold text-sm sm:text-base">{t.total}:</span>
-              <span className="text-xl sm:text-2xl font-bold text-green-400">{numberFormat(getTotalPrice())}&nbsp;฿</span>
+              <span className="text-gray-300 font-semibold">{t.total}:</span>
+              <span className="text-2xl font-bold text-green-400">{numberFormat(getTotalPrice())}&nbsp;฿</span>
             </div>
-            <div className="flex flex-col gap-2 sm:gap-3 pt-4">
+            <div className="flex flex-col gap-3 pt-4">
               {user ? (
                 <button
                   onClick={handleSaveCart}

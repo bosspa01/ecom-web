@@ -55,35 +55,37 @@ const MainNav = () => {
   return (
     <>
       <nav className="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
-        <div className="mx-auto px-2 sm:px-4">
-          <div className="flex justify-between items-center h-14 sm:h-16">
-            {/* Left Side - Logo */}
-            <Link to={"/"} className="text-xl sm:text-2xl font-bold text-green-400 hover:text-green-300 transition-colors flex-shrink-0">
-              LOGO
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-6 ml-8">
-              <Link to={"/"} className="hover:text-green-400 transition-colors">{t.home}</Link>
-              <Link to={"/shop"} className="hover:text-green-400 transition-colors">{t.shop}</Link>
+        <div className="mx-auto px-4">
+          <div className="flex justify-between items-center h-16">
+            {/* Left Side - Logo and Navigation */}
+            <div className="flex items-center gap-6">
+              <Link to={"/"} className="text-2xl font-bold text-green-400 hover:text-green-300 transition-colors">
+                LOGO
+              </Link>
+              <div className="hidden md:flex items-center gap-6">
+                <Link to={"/"} className="hover:text-green-400 transition-colors">{t.home}</Link>
+                <Link to={"/shop"} className="hover:text-green-400 transition-colors">{t.shop}</Link>
+              </div>
             </div>
 
-            {/* Right Side - Icons */}
-            <div className="flex items-center gap-2 sm:gap-4">
+            {/* Right Side - Search, Cart, History, User Dropdown, Login/Register */}
+            <div className="flex items-center gap-4">
+              <LanguageSwitcher />
+              
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
                 title={t.search}
               >
-                <Search size={18} className="sm:w-5 sm:h-5" />
+                <Search size={20} />
               </button>
               
               <Link 
                 to={"/cart"} 
-                className="relative p-2 hover:bg-gray-800 rounded-lg transition-colors flex-shrink-0"
+                className="relative p-2 hover:bg-gray-800 rounded-lg transition-colors"
                 title={t.shopping_cart}
               >
-                <ShoppingCart size={18} className="sm:w-5 sm:h-5" />
+                <ShoppingCart size={20} />
                 {carts.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                     {carts.length}
@@ -91,15 +93,10 @@ const MainNav = () => {
                 )}
               </Link>
 
-              {/* Desktop Language Switcher */}
-              <div className="hidden md:block">
-                <LanguageSwitcher />
-              </div>
-
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors flex-shrink-0"
+                className="md:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors"
               >
                 {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -200,31 +197,24 @@ const MainNav = () => {
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div ref={mobileMenuRef} className="md:hidden bg-gray-800 border-t border-gray-700 py-3 px-4 space-y-2 max-h-96 overflow-y-auto">
+            <div ref={mobileMenuRef} className="md:hidden bg-gray-800 border-t border-gray-700 py-4 px-4 space-y-3">
               {/* Mobile Navigation Links */}
               <Link 
                 to="/" 
                 onClick={closeMobileMenu}
-                className="block py-2 px-2 hover:text-green-400 transition-colors text-sm sm:text-base"
+                className="block py-2 hover:text-green-400 transition-colors"
               >
                 {t.home}
               </Link>
               <Link 
                 to="/shop" 
                 onClick={closeMobileMenu}
-                className="block py-2 px-2 hover:text-green-400 transition-colors text-sm sm:text-base"
+                className="block py-2 hover:text-green-400 transition-colors"
               >
                 {t.shop}
               </Link>
 
-              <div className="border-t border-gray-700 my-2"></div>
-              
-              {/* Mobile Language Switcher */}
-              <div className="py-2 px-2">
-                <LanguageSwitcher />
-              </div>
-              
-              <div className="border-t border-gray-700 my-2"></div>
+              <hr className="border-gray-700 my-2" />
 
               {/* Mobile User Actions */}
               {!user ? (
@@ -232,14 +222,14 @@ const MainNav = () => {
                   <Link 
                     to="/login"
                     onClick={closeMobileMenu}
-                    className="block py-2 px-2 hover:text-green-400 transition-colors text-sm sm:text-base"
+                    className="block py-2 hover:text-green-400 transition-colors"
                   >
                     {t.login}
                   </Link>
                   <Link 
                     to="/register"
                     onClick={closeMobileMenu}
-                    className="block py-2 px-2 text-green-400 font-semibold hover:text-green-300 transition-colors text-sm sm:text-base"
+                    className="block py-2 text-green-400 font-semibold hover:text-green-300 transition-colors"
                   >
                     {t.register}
                   </Link>
@@ -249,29 +239,29 @@ const MainNav = () => {
                   <Link
                     to="/user/history"
                     onClick={closeMobileMenu}
-                    className="flex items-center gap-2 py-2 px-2 hover:text-green-400 transition-colors text-sm sm:text-base"
+                    className="flex items-center gap-2 py-2 hover:text-green-400 transition-colors"
                   >
-                    <History size={16} className="flex-shrink-0" />
+                    <History size={18} />
                     <span>{t.history}</span>
                     {hasNewOrder && (
-                      <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-3 h-3 animate-pulse flex-shrink-0"></span>
+                      <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-3 h-3 animate-pulse"></span>
                     )}
                   </Link>
                   <Link
                     to="/user"
                     onClick={closeMobileMenu}
-                    className="flex items-center gap-2 py-2 px-2 hover:text-green-400 transition-colors text-sm sm:text-base"
+                    className="flex items-center gap-2 py-2 hover:text-green-400 transition-colors"
                   >
-                    <User size={16} className="flex-shrink-0" />
+                    <User size={18} />
                     <span className="truncate">{user.email || user.name || "User"}</span>
                   </Link>
                   {(user.role === "admin" || user.role === "superadmin") && (
                     <Link
                       to="/admin"
                       onClick={closeMobileMenu}
-                      className="flex items-center gap-2 py-2 px-2 text-green-400 hover:text-green-300 transition-colors text-sm sm:text-base"
+                      className="flex items-center gap-2 py-2 text-green-400 hover:text-green-300 transition-colors"
                     >
-                      <LayoutDashboard size={16} className="flex-shrink-0" />
+                      <LayoutDashboard size={18} />
                       <span>Admin Panel</span>
                     </Link>
                   )}
@@ -279,9 +269,9 @@ const MainNav = () => {
                     <Link
                       to="/user/support"
                       onClick={closeMobileMenu}
-                      className="flex items-center gap-2 py-2 px-2 hover:text-green-400 transition-colors text-sm sm:text-base"
+                      className="flex items-center gap-2 py-2 hover:text-green-400 transition-colors"
                     >
-                      <MessageSquare size={16} className="flex-shrink-0" />
+                      <MessageSquare size={18} />
                       <span>{t.support}</span>
                     </Link>
                   )}
@@ -290,9 +280,9 @@ const MainNav = () => {
                       handleLogout();
                       closeMobileMenu();
                     }}
-                    className="w-full text-left flex items-center gap-2 py-2 px-2 text-red-400 hover:text-red-300 transition-colors text-sm sm:text-base"
+                    className="w-full text-left flex items-center gap-2 py-2 text-red-400 hover:text-red-300 transition-colors"
                   >
-                    <LogOut size={16} className="flex-shrink-0" />
+                    <LogOut size={18} />
                     <span>{t.logout}</span>
                   </button>
                 </>
