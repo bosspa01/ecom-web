@@ -1,13 +1,8 @@
-/* Root should be full width so full-bleed sections can span the viewport */
 #root {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* Prevent horizontal scrolling caused by wide elements */
-html, body {
-  overflow-x: hidden;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
 
 .logo {
@@ -64,7 +59,8 @@ html, body, #root {
   --mobile-gutter: 0.75rem;
 }
 
-.container {
+.container,
+#root {
   max-width: var(--site-max-width);
   margin-left: auto;
   margin-right: auto;

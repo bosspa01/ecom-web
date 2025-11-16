@@ -14,7 +14,7 @@ const HeroBanner = ({
 }) => {
   return (
     <div 
-      className={`relative w-full min-h-[45vh] sm:min-h-[55vh] md:min-h-[65vh] lg:min-h-[75vh] bg-gradient-to-b ${gradient} flex items-center justify-center overflow-hidden`}
+      className={`relative w-full min-h-[500px] bg-gradient-to-b ${gradient} flex items-center justify-center overflow-hidden`}
       style={backgroundImage ? { backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
     >
       {/* Overlay for better text readability */}
@@ -28,19 +28,19 @@ const HeroBanner = ({
         )}
         
         {title && (
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
             {title}
           </h1>
         )}
         
         {subtitle && (
-          <h2 className="text-lg sm:text-2xl md:text-3xl text-white mb-4">
+          <h2 className="text-2xl md:text-4xl text-white mb-4">
             {subtitle}
           </h2>
         )}
         
         {description && (
-          <p className="text-base sm:text-lg text-white/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
             {description}
           </p>
         )}
