@@ -40,3 +40,139 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Responsive: mobile-first base rules */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --site-max-width: 1280px;
+  --gutter: 1rem;
+  --mobile-gutter: 0.75rem;
+}
+
+.container,
+#root {
+  max-width: var(--site-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* Make media fit and elements flow on small screens */
+img, svg, video, picture {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Generic layout helpers used by components */
+.row { display: flex; flex-wrap: wrap; gap: 1rem; }
+.col { flex: 1 1 0%; }
+.stack { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* Product grid: responsive auto-fit columns */
+.products-grid,
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.product-card,
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make form elements and buttons touch friendly on mobile */
+input, textarea, select, button {
+  font-size: 1rem;
+}
+
+/* Reduce global padding on smaller screens */
+@media (max-width: 900px) {
+  .container { padding-left: 0.75rem; padding-right: 0.75rem; }
+}
+
+/* Mobile (narrow & portrait/tall) adjustments */
+@media (max-width: 600px) {
+  :root { --gutter: var(--mobile-gutter); }
+
+  body { font-size: 15px; }
+
+  /* Header / nav */
+  .main-nav, header, .header, .announcement {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    align-items: center;
+  }
+
+  /* Hide sidebars and force one-column content */
+  .sidebar, .sidebar-admin {
+    display: none !important;
+  }
+
+  /* Product grid -> single column on very small screens */
+  .products-grid, .featured-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .hero {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Make checkout/cart stack vertically and be full width */
+  .cart, .checkout, .checkout-form, .summary, .order-summary {
+    width: 100% !important;
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  /* Buttons full width for easier taps */
+  .btn, button {
+    width: 100%;
+    padding: 0.85rem 1rem;
+  }
+
+  /* Smaller logos and images in header */
+  .logo { height: 3.2rem; padding: 0.5rem; }
+
+  /* Announcement bar smaller */
+  .announcement { font-size: 0.9rem; padding: 0.4rem; }
+}
+
+/* Extra rules for tall narrow screens to improve vertical fit */
+@media (max-width: 600px) and (min-height: 700px) {
+  .hero {
+    min-height: 45vh; /* keep hero visible but not too tall */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .featured-products, .main-content {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}
+
+/* Accessibility: reduce motion on small devices by default */
+@media (max-width: 600px) {
+  @media (prefers-reduced-motion: no-preference) {
+    * { transition-duration: 120ms !important; }
+  }
+}
