@@ -24,20 +24,20 @@ const CategoryShowcase = () => {
   const displayCategories = categories.length > 0 ? categories : defaultCategories;
 
   return (
-    <section className="py-12 px-4 bg-white">
+    <section className="py-8 sm:py-12 px-3 sm:px-4 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{t.shop_by_category}</h2>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">{t.shop_by_category}</h2>
           <Link
             to="/shop"
-            className="flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold transition-colors"
+            className="flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold transition-colors w-fit"
           >
             {t.view_all_categories}
             <ArrowRight size={20} />
           </Link>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
           {displayCategories.map((category) => (
             <Link
               key={category.id}
@@ -52,15 +52,15 @@ const CategoryShowcase = () => {
                 />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
-                  <span className="text-gray-600 text-2xl font-bold">{category.name}</span>
+                  <span className="text-gray-600 text-lg sm:text-2xl font-bold text-center px-2">{category.name}</span>
                 </div>
               )}
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <h3 className="text-white font-bold text-lg md:text-xl">{category.name}</h3>
-                <div className="flex items-center gap-1 text-white mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-sm">{t.explore}</span>
-                  <ArrowRight size={16} />
+              <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4">
+                <h3 className="text-white font-bold text-base sm:text-lg md:text-xl line-clamp-2">{category.name}</h3>
+                <div className="flex items-center gap-1 text-white mt-1 opacity-0 group-hover:opacity-100 transition-opacity text-xs sm:text-sm">
+                  <span>{t.explore}</span>
+                  <ArrowRight size={14} className="sm:w-4 sm:h-4" />
                 </div>
               </div>
             </Link>
